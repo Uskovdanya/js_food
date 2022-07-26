@@ -120,6 +120,94 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   setClock('.timer', deadline);
 
+  //---------------------------------modal------------------------------------------------------------
+
+  const modalTrigger = document.querySelectorAll('[data-modal]'),
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
+  
+  modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('show');
+      modal.classList.remove('hide');
+      document.body.style.overflow = 'hidden'; // убираем прокрутку за модальным окном
+  
+    });
+
+  });
+
+
+
+
+  function closeModal() {
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  modalCloseBtn.addEventListener('click', closeModal); //.. тут не нужны скобки
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+
+      closeModal(); // тут нужны скобки
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.code ==='Escape' && modal.classList.contains('show')) {
+      closeModal(); 
+    }
+
+  });
+
+  //// добавляем закрытие по клику на подложку
+
+  //modal.addEventListener('click', (e) => {
+  //  if (e.target === modal) {
+  //    modal.classList.remove('show');
+  //    modal.classList.add('hide');
+  //    document.body.style.overflow = ''; // восстанавливаем скролл на странице
+  //  }
+  //});
+  // Код с ошибкой так делать не следует, не следует писать event.target  а объект события не писать в скобаках
+  /*  modal.addEventListener('click', () => {
+    if (event.target === modal) {
+      modal.classList.remove('show');
+      modal.classList.add('hide');
+      document.body.style.overflow = ''; // восстанавливаем скролл на странице
+    }
+  });*/
+
+  //Так как у нас участок кода повторяется мы можем вынести его в отдельную функцию
+  
+
+
+
+
+
+  
+  //modalCloseBtn.addEventListener('click', () => {
+  //  modal.classList.remove('show');
+  //  modal.classList.add('hide');
+  //  document.body.style.overflow = ''; // восстанавливаем скролл на странице
+
+  //});
+
+  // В варианте с toggle 
+
+  //modalTrigger.addEventListener('click', () => {
+  //  modal.classList.toggle('show');
+
+  //  document.body.style.overflow = 'hidden'; 
+
+  //});
+  //modalCloseBtn.addEventListener('click', () => {
+  //  modal.classList.toggle('show');
+
+  //  document.body.style.overflow = ''; 
+
+  //});
+
 
 });
 

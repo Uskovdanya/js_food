@@ -194,11 +194,77 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (t.total <= 0) {
         clearInterval(timeInterval);
-      }
+      } //можно дописать условия чтобы вставлялась верстка Акция завершена
+      //if (t.total < 0) {
+      //  timer.innerHTML = `<h3>Акция завершалась</h3>`;
+      //  timer.classlist.add('close');
+      //}
+
     }
   }
 
-  setClock('.timer', deadline);
+  setClock('.timer', deadline); //---------------------------------modal------------------------------------------------------------
+
+  const modalTrigger = document.querySelectorAll('[data-modal]'),
+        modal = document.querySelector('.modal'),
+        modalCloseBtn = document.querySelector('[data-close]');
+  modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('show');
+      modal.classList.remove('hide');
+      document.body.style.overflow = 'hidden'; // убираем прокрутку за модальным окном
+    });
+  });
+
+  function closeModal() {
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  modalCloseBtn.addEventListener('click', closeModal); //.. тут не нужны скобки
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      closeModal(); // тут нужны скобки
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Escape' && modal.classList.contains('show')) {
+      closeModal();
+    }
+  }); //// добавляем закрытие по клику на подложку
+  //modal.addEventListener('click', (e) => {
+  //  if (e.target === modal) {
+  //    modal.classList.remove('show');
+  //    modal.classList.add('hide');
+  //    document.body.style.overflow = ''; // восстанавливаем скролл на странице
+  //  }
+  //});
+  // Код с ошибкой так делать не следует, не следует писать event.target  а объект события не писать в скобаках
+
+  /*  modal.addEventListener('click', () => {
+    if (event.target === modal) {
+      modal.classList.remove('show');
+      modal.classList.add('hide');
+      document.body.style.overflow = ''; // восстанавливаем скролл на странице
+    }
+  });*/
+  //Так как у нас участок кода повторяется мы можем вынести его в отдельную функцию
+  //modalCloseBtn.addEventListener('click', () => {
+  //  modal.classList.remove('show');
+  //  modal.classList.add('hide');
+  //  document.body.style.overflow = ''; // восстанавливаем скролл на странице
+  //});
+  // В варианте с toggle 
+  //modalTrigger.addEventListener('click', () => {
+  //  modal.classList.toggle('show');
+  //  document.body.style.overflow = 'hidden'; 
+  //});
+  //modalCloseBtn.addEventListener('click', () => {
+  //  modal.classList.toggle('show');
+  //  document.body.style.overflow = ''; 
+  //});
 }); //Вот готовое решение, добавляем теги p с id в html файле.
 //И собственно сама функция.
 //Но хотел бы посмотреть на реализацию иным способом. Сэнсэй выручай)
@@ -294,6 +360,112 @@ window.addEventListener('DOMContentLoaded', () => {
 //        }
 //    }
 //    setClock('.timer', deadline);
+//Римские часы
+//window.addEventListener('DOMContentLoaded', () => {
+//  // Tabs
+//  let tabs = document.querySelectorAll('.tabheader__item'),
+//      tabsContent = document.querySelectorAll('.tabcontent'),
+//      tabsParent = document.querySelector('.tabheader__items');
+//  function hideTabContent() {
+//      tabsContent.forEach(item => {
+//          item.classList.add('hide');
+//          item.classList.remove('show', 'fade');
+//      });
+//      /* tabsContent.forEach(item => {
+//           item.style.display = 'none';
+//       });
+//       */
+//      tabs.forEach(item => {
+//          item.classList.remove('tabheader__item_active');
+//      });
+//  }
+//  function showTabContent(i = 0) {
+//      tabsContent[i].classList.add('show', 'fade');
+//      tabsContent[i].classList.remove('hide');
+//      tabs[i].classList.add('tabheader__item_active');
+//  }
+//  // tabsContent[i].style.display = "block";
+//  // tabs[i].classList.add('tabheader__item_active');
+//  hideTabContent();
+//  showTabContent();
+//  tabsParent.addEventListener('click', (event) => {
+//      const target = event.target;
+//      if (target && target.classList.contains('tabheader__item')) {
+//          tabs.forEach((item, i) => {
+//              if (target == item) {
+//                  hideTabContent();
+//                  showTabContent(i);
+//              }
+//          });
+//      }
+//  });
+//  //Timer
+//  const deadline = '2020-07-11';
+//  function getTimeRemaining(endtime) {
+//      const t = Date.parse(endtime) - Date.parse(new Date()),
+//          days = Math.floor((t / (1000 * 60 * 60 * 24))),
+//          hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+//          minutes = Math.floor((t / 1000 / 60) % 60),
+//          seconds = Math.floor((t / 1000) % 60);
+//      return {
+//          'total': t,
+//          'days': days,
+//          'hours': hours,
+//          'minutes': minutes,
+//          'seconds': seconds
+//      };
+//  }
+//  function getZero(num){
+//      if (num >= 0 && num < 10) { 
+//          return '0' + num;
+//      } else {
+//          return num;
+//      }
+//  }
+//  function solution(number) {
+//      let result = "";
+//      let transform = function (value, roman) {
+//          while (number >= value) {
+//              result += roman;
+//              number -= value;
+//          }
+//      };
+//      transform(1000, "M");
+//      transform(900, "CM");
+//      transform(500, "D");
+//      transform(400, "CD");
+//      transform(100, "C");
+//      transform(90, "XC");
+//      transform(50, "L");
+//      transform(40, "XL");
+//      transform(10, "X");
+//      transform(9, "IX");
+//      transform(5, "V");
+//      transform(4, "IV");
+//      transform(1, "I");
+//      return result;
+//  }
+//  function setClock(selector, endtime) {
+//      const timer = document.querySelector(selector),
+//          days = timer.querySelector('#days'),
+//          hours = timer.querySelector('#hours'),
+//          minutes = timer.querySelector('#minutes'),
+//          seconds = timer.querySelector('#seconds'),
+//          timeInterval = setInterval(updateClock, 1000);
+//      updateClock();
+//      function updateClock() {
+//          const t = getTimeRemaining(endtime);
+//          days.innerHTML = solution(t.days);
+//          hours.innerHTML = solution(t.hours);
+//          minutes.innerHTML = solution(t.minutes);
+//          seconds.innerHTML = solution(t.seconds);
+//          if (t.total <= 0) {
+//              clearInterval(timeInterval);
+//          }
+//      }
+//  }
+//  setClock('.timer', deadline);
+//});
 
 /***/ })
 
