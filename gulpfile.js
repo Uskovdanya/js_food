@@ -6,7 +6,7 @@ const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
 const browsersync = require("browser-sync");
 
-const dist = "c:/OpenServer/domains/number646972798084";
+const dist = "C:/OpenServer/domains/number646972798084";
 
 
 gulp.task("copy-html", () => {

@@ -52,3 +52,26 @@ function calcOrDoouble(number, basis = 2) {
 }
 
 calcOrDoouble(3);
+
+
+
+
+API application programming interface интерфейс программного обеспечения. Набор данных и возможностей которые предоставляет нам какое то готовое решение
+DOM API это различные методы которые позволяют нам работать с элементами на странице 
+api это готовый интерфейс с которым вы можете работать(некторое обобщающее понятие что нам предоставляют методы и свойства)
+fetch api позволяет общаться с сервером и она построена на промисах
+
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json));
+
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: "POST",
+    body: JSON.stringify({name: 'Alex'}),
+    headers: {
+      'Content-type': 'application/json'
+    }
+
+  })
+  .then(response => response.json())
+  .then(json => console.log(json));
